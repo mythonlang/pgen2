@@ -189,15 +189,17 @@ def handleAtom (tokenizer_obj, crntToken = None):
 
 def parse_string(in_string, tokenizer_obj=None):
     if tokenizer_obj == None:
-        tokenizer_obj = tokenizer.Tokenizer().tokenizeString(in_string)
-    return handleStart(tokenizer_obj)
+        tokenizer_obj = tokenizer.Tokenizer()
+    return handleStart(tokenizer_obj.tokenizeString(in_string))
 
 # ______________________________________________________________________
 
 def parse_file(filename, tokenizer_obj=None):
-    if tokenizer_obj == None:
-        tokenizer_obj = tokenizer.Tokenizer().tokenizeFile(filename)
-    return handleStart(tokenizer_obj)
+    with open(filename) as fileobj:
+        if tokenizer_obj == None:
+            tokenizer_obj = tokenizer.Tokenizer()
+        ret_val = handleStart(tokenizer_obj.tokenize(fileobj))
+    return ret_val
 
 # ______________________________________________________________________
 
