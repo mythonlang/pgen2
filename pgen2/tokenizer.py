@@ -117,17 +117,24 @@ class Tokenizer (object) :
         """
         self._python = python
         self.operatorMap = opmap.copy()
-        if python :
+        if python:
             self.operatorMap = self.__class__.operatorMap.copy()
             self.operatorMap.update(opmap)
         else :
             self.operatorMap = opmap.copy()
         self.tok_name = {}
         self._extra = {}
-        if python :
+        if python:
             for kind, name in tokenize.tok_name.items():
                 self.tok_name[kind] = name
                 setattr(self, name, kind)
+            # Hack since NT_OFFSET doesn't appear in pypy's
+            # tokenize.tok_name dictionary.
+            nt_off_str = 'NT_OFFSET'
+            if not hasattr(self, nt_off_str):
+                nt_off_kind = tokenize.NT_OFFSET
+                self.tok_name[nt_off_kind] = nt_off_str
+                setattr(self, nt_off_str, nt_off_kind)
         last = max(n for n in self.tok_name if n != self.NT_OFFSET)
         for shift, (name, txt) in enumerate(sorted(extra.items())) :
             #WARNING: sorted above is required to guaranty that extra
