@@ -187,7 +187,7 @@ def handleAtom (tokenizer_obj, crntToken = None):
 
 # ______________________________________________________________________
 
-def parse_string(inString, tokenizer_obj=None):
+def parse_string(in_string, tokenizer_obj=None):
     if tokenizer_obj == None:
         tokenizer_obj = tokenizer.Tokenizer().tokenizeString(in_string)
     return handleStart(tokenizer_obj)
