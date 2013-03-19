@@ -212,6 +212,10 @@ class Tokenizer (object) :
     # ____________________________________________________________
     def tokenizeFile (self, filename):
         """StdTokenizer.tokenizeFile()
+
+        FIXME: This is not 'safe' in that it won't close the file
+        object.  Maybe deprecate this method in favor of just using
+        tokenize()?
         """
         self.filename = filename
         self.fileObj = open(filename)
@@ -227,6 +231,9 @@ class Tokenizer (object) :
 # ______________________________________________________________________
 
 class TokenizerFactory:
+    """
+    Deprecated.  Just construct a Tokenizer instance.
+    """
     # ____________________________________________________________
     def __init__ (self, tokenizerClass, opMap = None):
         if None == opMap:
