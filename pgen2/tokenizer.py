@@ -8,9 +8,9 @@ tokenizers for pypgen and pygen-generated parser.
 
 import string
 try:
-    import io
-except ImportError:
     import StringIO as io
+except ImportError:
+    import io
 import tokenize
 
 # ______________________________________________________________________
