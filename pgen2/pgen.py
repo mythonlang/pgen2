@@ -492,8 +492,10 @@ class PyPgenParser (object):
         """PyPgenParser.parseFile
         Accepts filename, returns parse tree.
         """
-        tokenizer = self.tokenizer_cls().tokenizeFile(filename)
-        return self.parseTokens(tokenizer)
+        with open(filename) as fileobj:
+            tokenizer = self.tokenizer_cls().tokenize(fileobj)
+            ret_val = self.parseTokens(tokenizer)
+        return ret_val
 
     # ____________________________________________________________
     def parseString (self, in_string):
@@ -578,10 +580,8 @@ def parserMain (gObj):
 def main(*args):
     # ____________________________________________________________
     # Generate a test parser
-    if len(args) > 0:
-        grammarFile = args[0]
-    else:
-        grammarFile = "tests/test.pgen"
+    assert len(args) > 0
+    grammarFile = args[0]
     grammarST = parser.parse_file(grammarFile)
     generated_parser = buildParser(grammarST)
     pprint.pprint(generated_parser.toTuple())
