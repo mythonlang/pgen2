@@ -8,3 +8,5 @@ python:
 script:
   - python -m compileall -f .
   - python -m pgen2.tests.test_meta_grammar
+notifications:
+  irc: "irc.freenode.org#mython"
