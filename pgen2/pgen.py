@@ -561,8 +561,6 @@ def parserMain (gObj):
             inputFile = opt_arg
         elif opt_flag == "-o":
             outputFile = opt_arg
-        elif opt_flag == "-g":
-            graphicalOutput = True
     # ____________________________________________________________
     parser = PyPgenParser(gObj)
     if inputFile != None:
@@ -574,9 +572,6 @@ def parserMain (gObj):
     else:
         outputFileObj = open(outputFile, "w")
     pprint.pprint(st, outputFileObj)
-    if graphicalOutput:
-        from basil.visuals.TreeBox import showTree
-        showTree(st).mainloop()
 
 # ______________________________________________________________________
 

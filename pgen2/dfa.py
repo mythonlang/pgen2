@@ -289,39 +289,34 @@ def main (inputGrammar, inputFile = None):
     """main() - Silly little test routine"""
     # ____________________________________________________________
     # Build tokenizer
-    import sys
-    try:
-        from basil.lang.python import StdTokenizer
-    except ImportError:
-        import StdTokenizer
+    import sys, time, pprint, pgen2.tokenizer
     if inputFile == None:
         inputFile = "<stdin>"
         fileObj = sys.stdin
     else:
         fileObj = open(inputFile)
-    tokenizer = StdTokenizer.StdTokenizer().tokenize(fileObj)
-    # ____________________________________________________________
-    # Build parser
-    import pprint
-    from basil.parsing import pgen
-    gramAst = pgen.metaParser.parseFile(inputGrammar)
-    myParser = pgen.buildParser(gramAst)
-    grammar = myParser.toTuple()
-    if __DEBUG__:
-        pprint.pprint(grammar)
-    symbols = myParser.stringToSymbolMap()
-    # ____________________________________________________________
-    # Run parser
-    import time
-    t0 = time.time()
-    parseTree = parsetok(tokenizer, grammar, symbols['file_input'])
-    t1 = time.time()
-    print("DFAParser took %g seconds" % (t1 - t0))
-    fileObj.close()
-    # ____________________________________________________________
-    # Display AST
-    from basil.visuals.TreeBox import showTree
-    showTree(parseTree).mainloop()
+    try:
+        tokenizer = pgen2.tokenizer.Tokenizer().tokenize(fileObj)
+        # __________________________________________________
+        # Build parser
+        gramAst = pgen.metaParser.parseFile(inputGrammar)
+        myParser = pgen.buildParser(gramAst)
+        grammar = myParser.toTuple()
+        if __DEBUG__:
+            pprint.pprint(grammar)
+        symbols = myParser.stringToSymbolMap()
+        # __________________________________________________
+        # Run parser
+        t0 = time.time()
+        parseTree = parsetok(tokenizer, grammar, symbols['file_input'])
+        t1 = time.time()
+        print("pgen2.dfa.parsetok() took %g seconds" % (t1 - t0))
+        fileObj.close()
+        # __________________________________________________
+        # Display AST
+        pprint.pprint(parseTree)
+    finally:
+        fileObj.close()
 
 # ______________________________________________________________________
 
