@@ -1,0 +1,20 @@
+# ______________________________________________________________________
+# meta.pgen
+#
+# Grammar for pgen grammar specifications.
+# ______________________________________________________________________
+
+mstart: ( rule | NEWLINE )* ENDMARKER
+
+rule: NAME ':' rhs NEWLINE
+
+rhs: alt ( '|' alt )*
+
+alt: item+
+
+item: '[' rhs ']' | atom [ '*' | '+' ]
+
+atom: '(' rhs ')' | NAME | STRING
+
+# ______________________________________________________________________
+# End of meta.pgen

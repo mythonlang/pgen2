@@ -496,12 +496,11 @@ class PyPgenParser (object):
         return self.parseTokens(tokenizer)
 
     # ____________________________________________________________
-    def parseString (self, inString):
+    def parseString (self, in_string):
         """PyPgenParser.parseString
         Accepts input string, return parse tree.
         """
-        tokenizer = self.tokenizerFactory.getTokenizer().tokenizeString(
-            inString)
+        tokenizer = self.tokenizer_cls().tokenizeString(in_string)
         return self.parseTokens(tokenizer)
 
     # ____________________________________________________________

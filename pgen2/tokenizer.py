@@ -77,7 +77,7 @@ class Tokenizer (object) :
         '.' : tokenize.DOT,
         '%' : tokenize.PERCENT,
         '%=' : tokenize.PERCENTEQUAL,
-        '`' : getattr(tokenize, "BACKQUOTE", -1),
+        '`' : getattr(tokenize, "BACKQUOTE", tokenize.ERRORTOKEN),
         '{' : tokenize.LBRACE,
         '}' : tokenize.RBRACE,
         '^' : tokenize.CIRCUMFLEX,
@@ -195,7 +195,7 @@ class Tokenizer (object) :
                 try :
                     token = (self._extra[token[1]],) + token[1:]
                 except :
-                    raise ParseError(Token(token, self))
+                    raise SyntaxError(token)
             elif token[0] in self._skip :
                 continue
             elif token[0] == self.OP :
