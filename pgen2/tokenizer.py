@@ -85,7 +85,11 @@ class Tokenizer (object) :
         '~' : tokenize.TILDE,
         '!=' : tokenize.NOTEQUAL,
         '<>' : tokenize.NOTEQUAL,
-        '@' : tokenize.AT
+        '@' : tokenize.AT,
+        '@=' : getattr(tokenize, 'ATEQUAL', tokenize.ERRORTOKEN),
+        '->' : getattr(tokenize, 'RARROW', tokenize.ERRORTOKEN),
+        '...' : getattr(tokenize, 'ELLIPSIS', tokenize.ERRORTOKEN),
+        ':=' : getattr(tokenize, 'COLONEQUAL', tokenize.ERRORTOKEN),
         }
 
     def __init__ (self, python=True, opmap={}, skip=None, **extra) :
